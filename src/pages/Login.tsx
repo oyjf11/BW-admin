@@ -1,35 +1,73 @@
-// src/pages/Login.tsx
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Button, Form, Input, message } from "antd";
+// import api from '@/api'
+// import api from '@/api'
+import type { LoginParams } from "@/types/api/login";
+// import storage from '@/utils/storage'
+// import { useStore } from '@/store'
+export default function LoginFC() {
+	const [loading, setLoading] = useState(false);
+	// const updateToken = useStore(state => state.updateToken)
+	const onFinish = async (values: LoginParams) => {
+		//   try {
+		setLoading(true);
+		console.log("%c[values]", "color: #42b883; font-weight: bold;", values);
+		//     const data = await api.login(values)
+		//     setLoading(false)
+		//     storage.set('token', data)
+		//     updateToken(data)
+		message.success("登录成功");
+		//     const params = new URLSearchParams(location.search)
+		//     setTimeout(() => {
+		//       location.href = params.get('callback') || '/welcome'
+		//     })
+		//   } catch (error) {
+		//     setLoading(false)
+		//   }
+	};
+	return (
+		<div
+			className="flex items-center justify-center w-screen h-screen min-h-screen bg-gray-100 bg-right bg-no-repeat bg-cover"
+			style={{ backgroundImage: "url('/image/bg.png')" }}
+		>
+			<div className="w-[600px] absolute top-1/3 right-[10%] max-w-md p-8 flex flex-col">
+				<div className="mb-8 text-2xl font-bold text-center text-orange-200">
+					系统登录
+				</div>
+				<Form
+					name="basic"
+					initialValues={{ remember: true }}
+					onFinish={onFinish}
+					autoComplete="off"
+					className="space-y-4"
+				>
+					<Form.Item
+						name="userName"
+						rules={[{ required: true, message: "Please input your username!" }]}
+					>
+						<Input className="w-full px-3 mb-4 border rounded" />
+					</Form.Item>
 
-export default function Login() {
-  const [loading, setLoading] = useState(false);
+					<Form.Item
+						name="userPwd"
+						rules={[{ required: true, message: "Please input your password!" }]}
+					>
+						<Input.Password className="w-full px-3 mb-4 border rounded" />
+					</Form.Item>
 
-  return (
-    <div className="w-[80vw] flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200">
-      <Card className="w-full px-[10%] shadow-lg">
-        <CardContent className="pt-6 pb-8">
-          <h2 className="mb-6 text-2xl font-bold text-center">后台登录</h2>
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              setLoading(true);
-              setTimeout(() => {
-                window.location.href = "/dashboard"; // 这里用来跳转，后续可改用 react-router
-              }, 1000);
-            }}
-            className="space-y-4"
-          >
-            <Input className="mb-[20px]" placeholder="用户名" required />
-            <Input className="mb-[20px]" placeholder="密码" type="password" required />
-            <Button className="w-full mt-2" disabled={loading}>
-              {loading ? "登录中..." : "登录"}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
-  );
+					<Form.Item>
+						<Button
+							type="primary"
+							block
+							htmlType="submit"
+							loading={loading}
+							className="w-full"
+						>
+							登录
+						</Button>
+					</Form.Item>
+				</Form>
+			</div>
+		</div>
+	);
 }
