@@ -24,13 +24,15 @@ export default tseslint.config([
 			"react-refresh": reactRefresh,
 		},
 		rules: {
+			// 关闭原生 no-unused-vars，避免和 TS 规则冲突
+			"no-unused-vars": "off",
+			// TypeScript 专用的 no-unused-vars，仅警告
+			"@typescript-eslint/no-unused-vars": "warn",
 			"react/react-in-jsx-scope": "off",
 			"no-console": "off",
-			"no-unused-vars": "off",
 			"no-debugger": "error",
 			"no-var": "error",
 			"@typescript-eslint/no-namespace": "off",
-			"@typescript-eslint/no-unused-vars": "off",
 			// ✅ react-refresh 推荐配置的核心规则
 			"react-refresh/only-export-components": [
 				"warn",

@@ -1,29 +1,32 @@
 import { useState } from "react";
-import { Button, Form, Input, message } from "antd";
-// import api from '@/api'
-// import api from '@/api'
+import { Button, Form, Input } from "antd";
+import { message } from "@/utils/antdGlobalProxy";
+import api from "@/api";
 import type { LoginParams } from "@/types/api/login";
-// import storage from '@/utils/storage'
-// import { useStore } from '@/store'
+import storage from "@/utils/storage";
+// import { useStore } from "@/store";
 export default function LoginFC() {
 	const [loading, setLoading] = useState(false);
 	// const updateToken = useStore(state => state.updateToken)
 	const onFinish = async (values: LoginParams) => {
-		//   try {
-		setLoading(true);
-		console.log("%c[values]", "color: #42b883; font-weight: bold;", values);
-		//     const data = await api.login(values)
-		//     setLoading(false)
-		//     storage.set('token', data)
-		//     updateToken(data)
-		message.success("登录成功");
-		//     const params = new URLSearchParams(location.search)
-		//     setTimeout(() => {
-		//       location.href = params.get('callback') || '/welcome'
-		//     })
-		//   } catch (error) {
-		//     setLoading(false)
-		//   }
+		try {
+			setLoading(true);
+			console.log("%c[values]", "color: #42b883; font-weight: bold;", values);
+			const data = await api.login(values);
+			setLoading(false);
+			storage.set("token", data);
+			// updateToken(data)
+			message.success("登录成功");
+
+			// 获取callback路径
+			const params = new URLSearchParams(location.search);
+			setTimeout(() => {
+				location.href = params.get("callback") || "/welcome";
+			}, 1000);
+		} catch (error) {
+			console.log("%c[error]", "color: #42b883; font-weight: bold;", error);
+			setLoading(false);
+		}
 	};
 	return (
 		<div

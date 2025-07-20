@@ -6,9 +6,9 @@ export default defineConfig({
 	plugins: [react()],
 	server: {
 		host: "localhost",
-		port: 8888,
+		port: 8080,
 		proxy: {
-			"/api": "http://api-driver.marsview.cc",
+			"/api": "https://driver.marsview.com.cn",
 		},
 	},
 	resolve: {
