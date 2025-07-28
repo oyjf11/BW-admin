@@ -7,6 +7,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body {
+	background-color: #ffffff;
+}
+
 a {
 	font-weight: 500;
 	color: #646cff;
